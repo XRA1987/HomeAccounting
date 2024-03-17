@@ -1,4 +1,4 @@
-namespace HomeAccoun.Api
+namespace HomeAccounting.Api
 {
     public class WeatherForecast
     {

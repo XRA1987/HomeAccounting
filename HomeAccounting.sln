@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAccounting.Api", "HomeAccounting.Api\HomeAccounting.Api.csproj", "{8022C7DB-EB0A-48FA-B0BA-D8787C46D95E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomeAccounting.Api", "HomeAccounting.Api\HomeAccounting.Api.csproj", "{8022C7DB-EB0A-48FA-B0BA-D8787C46D95E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAccounting.Domain", "HomeAccounting.Domain\HomeAccounting.Domain.csproj", "{80AD1D93-2EA5-40E1-AB08-1E7C04737E70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAccounting.Application", "HomeAccounting.Application\HomeAccounting.Application.csproj", "{807AB7D1-BE49-4440-AE32-DDD7F2C42796}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeAccounting.Infrastructure", "HomeAccounting.Infrastructure\HomeAccounting.Infrastructure.csproj", "{70448438-6B91-4441-8043-6522BFDC458C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{8022C7DB-EB0A-48FA-B0BA-D8787C46D95E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8022C7DB-EB0A-48FA-B0BA-D8787C46D95E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8022C7DB-EB0A-48FA-B0BA-D8787C46D95E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80AD1D93-2EA5-40E1-AB08-1E7C04737E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80AD1D93-2EA5-40E1-AB08-1E7C04737E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80AD1D93-2EA5-40E1-AB08-1E7C04737E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80AD1D93-2EA5-40E1-AB08-1E7C04737E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{807AB7D1-BE49-4440-AE32-DDD7F2C42796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{807AB7D1-BE49-4440-AE32-DDD7F2C42796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{807AB7D1-BE49-4440-AE32-DDD7F2C42796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{807AB7D1-BE49-4440-AE32-DDD7F2C42796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70448438-6B91-4441-8043-6522BFDC458C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70448438-6B91-4441-8043-6522BFDC458C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70448438-6B91-4441-8043-6522BFDC458C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70448438-6B91-4441-8043-6522BFDC458C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

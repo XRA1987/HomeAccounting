@@ -1,9 +1,10 @@
-﻿using HomeAccounting.Domain.Entities;
+﻿using HomeAccounting.Application.Abstractions;
+using HomeAccounting.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeAccounting.Infrastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

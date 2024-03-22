@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HomeAccounting.Application
 {
@@ -6,6 +7,8 @@ namespace HomeAccounting.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services.AddMediatR(typeof(DependencyInjection).Assembly);
+
             return services;
         }
     }

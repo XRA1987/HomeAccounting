@@ -14,9 +14,9 @@ namespace HomeAccounting.Infrastructure.Persistence.EntityTypeConfigurations
                 .WithMany(x => x.Transactions)
                 .HasForeignKey(x => x.ClientId);
 
-            builder.HasOne(x => x.Source)
+            builder.HasOne(x => x.Category)
                 .WithMany(x => x.Transactions)
-                .HasForeignKey(x => x.SourceId);
+                .HasForeignKey(x => x.CategoryId);
         }
     }
 }

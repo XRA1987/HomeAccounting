@@ -15,10 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\HomeAccounting.Application\HomeAccounting.Application.csproj" />
     <ProjectReference Include="..\HomeAccounting.Infrastructure\HomeAccounting.Infrastructure.csproj" />
   </ItemGroup>

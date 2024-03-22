@@ -9,7 +9,6 @@ namespace HomeAccounting.Application.Abstractions
         DbSet<Admin> Admins { get; set; }
         DbSet<Client> Clients { get; set; }
         DbSet<Transaction> Transactions { get; set; }
-        DbSet<Source> Sources { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<ExistingTransaction> ExistingTransactions { get; set; }
         DbSet<PlanningTransaction> PlanningTransactions { get; set; }

@@ -1,10 +1,10 @@
 ﻿using HomeAccounting.Application.Abstractions;
-using HomeAccounting.Domain.Entities;
+using HomeAccounting.Application.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace HomeAccounting.Application.UseCases.Admin.Queries
 {
-    public class GetCategoriesQuery : IQuery<List<Category>>
+    public class GetCategoriesQuery : IQuery<List<ResponseCategoryViewModel>>
     {
         public int Page { get; set; }
         public int Limit { get; set; }
@@ -16,7 +16,7 @@ namespace HomeAccounting.Application.UseCases.Admin.Queries
         }
     }
 
-    public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, List<Category>>
+    public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, List<ResponseCategoryViewModel>>
     {
         private readonly IApplicationDbContext _dbContext;
 
@@ -25,7 +25,7 @@ namespace HomeAccounting.Application.UseCases.Admin.Queries
             _dbContext = dbContext;
         }
 
-        public async Task<List<Category>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<List<ResponseCategoryViewModel>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             if (request.Page <= 0 || request.Limit <= 0)
             {
@@ -34,15 +34,16 @@ namespace HomeAccounting.Application.UseCases.Admin.Queries
 
             var sKip = request.Page > 0 ? (request.Page - 1) * request.Limit : 0;
 
-            var categories = await _dbContext.Categories
+            return await _dbContext.Categories
+                .Select(x => new ResponseCategoryViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                })
                 .OrderBy(x => x.Id)
                 .Skip(sKip)
                 .Take(request.Limit)
                 .ToListAsync(cancellationToken);
-
-            return categories;
         }
     }
-
-
 }

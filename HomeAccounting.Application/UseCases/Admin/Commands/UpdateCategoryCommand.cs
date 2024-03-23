@@ -23,7 +23,7 @@ namespace HomeAccounting.Application.UseCases.Admin.Commands
                 throw new CategoryNotFoundExceptions();
             }
 
-            catecory.Name = command.Name;
+            catecory.Name = command.Name ?? catecory.Name;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

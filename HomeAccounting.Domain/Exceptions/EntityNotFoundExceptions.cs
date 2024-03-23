@@ -1,8 +1,8 @@
 ﻿namespace HomeAccounting.Domain.Exceptions
 {
-    public class EntityNotFoundException : Exception
+    public class EntityNotFoundExceptions : Exception
     {
-        public EntityNotFoundException(string entityName)
+        public EntityNotFoundExceptions(string entityName)
             : base($"{entityName} not found")
         {
         }

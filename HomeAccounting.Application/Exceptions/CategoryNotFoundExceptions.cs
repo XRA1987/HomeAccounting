@@ -2,7 +2,7 @@
 
 namespace HomeAccounting.Application.Exceptions
 {
-    public class CategoryNotFoundExceptions : EntityNotFoundException
+    public class CategoryNotFoundExceptions : EntityNotFoundExceptions
     {
         private const string _message = "Category";
 

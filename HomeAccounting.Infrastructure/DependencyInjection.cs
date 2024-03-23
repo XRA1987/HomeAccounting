@@ -21,6 +21,7 @@ namespace HomeAccounting.Infrastructure
 
             services.AddSingleton<IHashService, HashService>();
             services.AddScoped<ITokenService, JWTService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

@@ -31,7 +31,7 @@ namespace HomeAccounting.Application.UseCases.Auth.Commands
 
             if (user == null)
             {
-                throw new LoginException(new EntityNotFoundException(nameof(User)));
+                throw new LoginException(new EntityNotFoundExceptions(nameof(User)));
             }
 
             if (user.PasswordHash != _hashService.GetHash(request.Password))

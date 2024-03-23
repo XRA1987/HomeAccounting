@@ -26,6 +26,15 @@ namespace HomeAccounting.Api.Controllers
             return Ok(response);
         }
 
+        [HttpGet("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            var response = await _mediator.Send(new GetCategoryByIdQuery() { Id = id });
+
+            return Ok(response);
+        }
+
         [HttpPost]
         [Authorize(Policy = "AdminActions")]
         public async Task<IActionResult> Create(GreateCategoryCommad command)
@@ -44,11 +53,11 @@ namespace HomeAccounting.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize(Policy = "AdminActions")]
-        public async Task<IActionResult> Delete(DeleteCategoryCommand command)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            await _mediator.Send(command);
+            await _mediator.Send(new DeleteCategoryCommand() { Id = id });
 
             return Ok();
         }

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\HomeAccounting.Domain\HomeAccounting.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\Client\Queries\" />
-  </ItemGroup>
-
 </Project>

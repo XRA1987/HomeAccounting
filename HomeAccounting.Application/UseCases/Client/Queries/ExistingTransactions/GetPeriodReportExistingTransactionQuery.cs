@@ -2,8 +2,9 @@
 using HomeAccounting.Application.DTOs;
 using HomeAccounting.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace HomeAccounting.Application.UseCases.Client.Queries
+namespace HomeAccounting.Application.UseCases.Client.Queries.ExistingTransactions
 {
     public class GetPeriodReportExistingTransactionQuery : IQuery<List<PeriodReportExistingTransactionViewModel>>
     {
@@ -17,11 +18,15 @@ namespace HomeAccounting.Application.UseCases.Client.Queries
     {
         private readonly IApplicationDbContext _dbContext;
         private readonly ICurrentUserService _currentUserService;
+        private readonly ILogger<GetPeriodReportExistingTransactionQueryHandler> _logger;
 
-        public GetPeriodReportExistingTransactionQueryHandler(IApplicationDbContext dbContext, ICurrentUserService currentUserService)
+        public GetPeriodReportExistingTransactionQueryHandler(IApplicationDbContext dbContext,
+            ICurrentUserService currentUserService,
+            ILogger<GetPeriodReportExistingTransactionQueryHandler> logger)
         {
             _dbContext = dbContext;
             _currentUserService = currentUserService;
+            _logger = logger;
         }
 
         public async Task<List<PeriodReportExistingTransactionViewModel>> Handle(GetPeriodReportExistingTransactionQuery request, CancellationToken cancellationToken)
@@ -35,16 +40,16 @@ namespace HomeAccounting.Application.UseCases.Client.Queries
                     throw new ArgumentOutOfRangeException("startMonth or endMonth", "Month must be between 1 and 12.");
                 }
 
-                if (request.StartYear > request.EndYear || (request.StartYear == request.EndYear && request.StartMonth > request.EndMonth))
+                if (request.StartYear > request.EndYear || request.StartYear == request.EndYear && request.StartMonth > request.EndMonth)
                 {
                     throw new ArgumentException("Start date cannot be after end date.");
                 }
 
                 for (int year = request.StartYear; year <= request.EndYear; year++)
                 {
-                    for (int month = (year == request.StartYear ? request.StartMonth : 1); month <= (year == request.EndYear ? request.EndMonth : 12); month++)
+                    for (int month = year == request.StartYear ? request.StartMonth : 1; month <= (year == request.EndYear ? request.EndMonth : 12); month++)
                     {
-                        var clientTransactions = await _dbContext.Transactions
+                        var clientTransactions = await _dbContext.ExistingTransactions
                             .Where(c => c.ClientId == _currentUserService.UserId)
                             .Where(t => t.Date.Year == year && t.Date.Month == month)
                             .ToListAsync(cancellationToken);
@@ -79,14 +84,17 @@ namespace HomeAccounting.Application.UseCases.Client.Queries
             }
             catch (ArgumentOutOfRangeException ex)
             {
+                _logger.LogError(ex.Message, ex.StackTrace);
                 Console.WriteLine($"Invalid month provided: {ex.Message}");
             }
             catch (ArgumentException ex)
             {
+                _logger.LogError(ex.Message, ex.StackTrace);
                 Console.WriteLine($"Start date cannot be after end date: {ex.Message}");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex.StackTrace);
                 Console.WriteLine($"Error retrieving transactions: {ex.Message}");
             }
 

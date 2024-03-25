@@ -1,6 +1,8 @@
 ﻿using HomeAccounting.Application.Abstractions;
 using HomeAccounting.Application.DTOs;
+using HomeAccounting.Application.UseCases.Client.Commands;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HomeAccounting.Application.UseCases.Admin.Queries
 {
@@ -19,17 +21,32 @@ namespace HomeAccounting.Application.UseCases.Admin.Queries
     public class GetCategoriesQueryHandler : IQueryHandler<GetCategoriesQuery, List<ResponseCategoryViewModel>>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<ClientRegisterCommandHandler> _logger;
 
-        public GetCategoriesQueryHandler(IApplicationDbContext dbContext)
+        public GetCategoriesQueryHandler(IApplicationDbContext dbContext, ILogger<ClientRegisterCommandHandler> logger)
         {
             _dbContext = dbContext;
+            _logger = logger;
         }
 
         public async Task<List<ResponseCategoryViewModel>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
-            if (request.Page <= 0 || request.Limit <= 0)
+            try
             {
-                throw new ArgumentException("Page and Limit must be positive integers.");
+                if (request.Page <= 0 || request.Limit <= 0)
+                {
+                    throw new ArgumentException("Page and Limit must be positive integers.");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.LogError(ex.Message, ex.StackTrace);
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex.StackTrace);
+                Console.WriteLine(ex.Message);
             }
 
             var sKip = request.Page > 0 ? (request.Page - 1) * request.Limit : 0;

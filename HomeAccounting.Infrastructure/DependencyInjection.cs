@@ -19,7 +19,9 @@ namespace HomeAccounting.Infrastructure
             services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddSingleton<IHashService, HashService>();
+            Console.WriteLine(configuration.GetConnectionString);
+
+            services.AddScoped<IHashService, HashService>();
             services.AddScoped<ITokenService, JWTService>();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 

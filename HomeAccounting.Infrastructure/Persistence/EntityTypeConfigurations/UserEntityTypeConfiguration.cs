@@ -9,8 +9,6 @@ namespace HomeAccounting.Infrastructure.Persistence.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasKey(x => x.Id);
-
-
         }
     }
 }

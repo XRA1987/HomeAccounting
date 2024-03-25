@@ -1,5 +1,5 @@
-﻿using HomeAccounting.Application.UseCases.Client.Commands;
-using HomeAccounting.Application.UseCases.Client.Queries;
+﻿using HomeAccounting.Application.UseCases.Client.Commands.ExistingTransactions;
+using HomeAccounting.Application.UseCases.Client.Queries.ExistingTransactions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

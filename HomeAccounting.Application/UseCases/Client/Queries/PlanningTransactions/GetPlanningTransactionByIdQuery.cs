@@ -2,36 +2,39 @@
 using HomeAccounting.Application.DTOs;
 using HomeAccounting.Application.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace HomeAccounting.Application.UseCases.Client.Queries
+namespace HomeAccounting.Application.UseCases.Client.Queries.PlanningTransactions
 {
-    public class GetExistingTransactionByIdQuery : IQuery<ResponseExistingTransactionViewModel>
+    public class GetPlanningTransactionByIdQuery : IQuery<ResponsePlanningTransactionViewModel>
     {
         public int Id { get; set; }
     }
 
-    public class GetExistingTransactionByIdQueryHandler : IQueryHandler<GetExistingTransactionByIdQuery, ResponseExistingTransactionViewModel>
+    public class GetPlanningTransactionByIdQueryHandler : IQueryHandler<GetPlanningTransactionByIdQuery, ResponsePlanningTransactionViewModel>
     {
         private readonly IApplicationDbContext _dbContext;
+        private readonly ILogger<GetPlanningTransactionByIdQueryHandler> _logger;
 
-        public GetExistingTransactionByIdQueryHandler(IApplicationDbContext context)
+        public GetPlanningTransactionByIdQueryHandler(IApplicationDbContext context, ILogger<GetPlanningTransactionByIdQueryHandler> logger)
         {
             _dbContext = context;
+            _logger = logger;
         }
 
-        public async Task<ResponseExistingTransactionViewModel> Handle(GetExistingTransactionByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ResponsePlanningTransactionViewModel> Handle(GetPlanningTransactionByIdQuery request, CancellationToken cancellationToken)
         {
-            var response = new ResponseExistingTransactionViewModel();
+            var response = new ResponsePlanningTransactionViewModel();
             try
             {
                 var transaction = await _dbContext.Transactions
                     .Include(t => t.Client)
                     .Include(t => t.Category)
-                    .FirstOrDefaultAsync(t => t.Id == request.Id);
+                    .FirstOrDefaultAsync(t => t.Id == request.Id, cancellationToken);
 
                 if (transaction == null)
                 {
-                    throw new ExistingTransactionNotFoundExceptions();
+                    throw new PlanningTransactionNotFoundExceptions();
                 }
 
                 response.Amount = transaction.Amount;
@@ -42,12 +45,14 @@ namespace HomeAccounting.Application.UseCases.Client.Queries
                 response.CategoryName = transaction.Category.Name;
 
             }
-            catch (ExistingTransactionNotFoundExceptions ex)
+            catch (PlanningTransactionNotFoundExceptions ex)
             {
+                _logger.LogError(ex.Message, ex.StackTrace);
                 Console.WriteLine($"Error retrieving transaction: {ex.Message}");
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex.Message, ex.StackTrace);
                 Console.WriteLine($"Error retrieving transaction: {ex.Message}");
             }
 
